@@ -139,43 +139,18 @@ function getMonthBudget(data,month){
 
 export default function App(){
   const [tab,setTab]=useState("dashboard");
-  const [data,setData]=useState(null);
+  const [data, setData] = useState(() => {
+  const saved = localStorage.getItem("gera-budget-v4");
+  return saved ? JSON.parse(saved) : DEFAULT;
+});
   const [month,setMonth]=useState(CUR);
   const [loading,setLoading]=useState(true);
   const [saved,setSaved]=useState(false);
-
-  useEffect(()=>{(async()=>{
-    try{
-      const r=await localStorage.get("gera-budget-v4");
-      const r3=!r?await localStorage.get("gera-budget-v3"):null;
-      const raw=r||r3;
-      if(raw){
-        const d=JSON.parse(raw.value);
-        if(!d.cards)d.cards={bdo:mkCard(),unionbank:mkCard()};
-        if(!d.cards.bdo)d.cards.bdo=mkCard();
-        if(!d.cards.unionbank)d.cards.unionbank=mkCard();
-        if(!d.monthBudgets){
-          const base=d.budgetCats||DEFAULT_BUDGET_CATS;
-          d.monthBudgets=Object.fromEntries(MONTHS.map((_,i)=>[i,base.map(c=>({...c}))]));
-          delete d.budgetCats;
-        }
-        if(!d.liabilities)d.liabilities=[];
-        if(!d.receivables)d.receivables=[];
-        if(!d.financialAdvice)d.financialAdvice=Object.fromEntries(MONTHS.map((_,i)=>[i,""]));
-        if(!d._budgetSavedMonths)d._budgetSavedMonths=[];
-        MONTHS.forEach((_,i)=>{
-          if(!d.months[i])d.months[i]=mkMonth();
-          if(!d.months[i].savings)d.months[i].savings=[];
-          if(!d.months[i].subsPaid)d.months[i].subsPaid={};
-          if(!d.months[i].liabPaid)d.months[i].liabPaid={};
-          if(!d.months[i].fixedActual)d.months[i].fixedActual={};
-          if(!d.monthBudgets[i])d.monthBudgets[i]=DEFAULT_BUDGET_CATS.map(c=>({...c}));
-        });
-        setData(d);
-      } else setData({...DEFAULT});
-    }catch(e){console.error(e);setData({...DEFAULT});}
-    setLoading(false);
-  })();},[]);
+  useEffect(() => {
+  if (data) {
+    localStorage.setItem("gera-budget-v4", JSON.stringify(data));
+  }
+}, [data]);
 
   const save = useCallback(async d=>{
     const nd={...d};
