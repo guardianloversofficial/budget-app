@@ -146,8 +146,8 @@ export default function App(){
 
   useEffect(()=>{(async()=>{
     try{
-      const r=await window.storage.get("gera-budget-v4");
-      const r3=!r?await window.storage.get("gera-budget-v3"):null;
+      const r=await localStorage.get("gera-budget-v4");
+      const r3=!r?await localStorage.get("gera-budget-v3"):null;
       const raw=r||r3;
       if(raw){
         const d=JSON.parse(raw.value);
@@ -181,7 +181,7 @@ export default function App(){
     const nd={...d};
     setData(nd);
     try{
-      await window.storage.set("gera-budget-v4",JSON.stringify(nd));
+      await localStorage.set("gera-budget-v4",JSON.stringify(nd));
       setSaved(true);
       setTimeout(()=>setSaved(false),1800);
     }catch{}
