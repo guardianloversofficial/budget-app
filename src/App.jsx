@@ -193,7 +193,7 @@ export default function App(){
 
   return <div style={{background:S.bg,minHeight:"100vh",color:S.text,fontFamily:"system-ui,sans-serif"}}>
     <div style={{background:"#fff",padding:"12px 16px",borderBottom:`1px solid ${S.border}`,display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,boxShadow:"0 1px 4px rgba(236,72,153,0.07)",flexWrap:"wrap"}}>
-      <h1 style={{margin:0,fontSize:16,fontWeight:700,color:S.accent}}>🌸 Gera's Budget Tracker 2026</h1>
+      <h1 style={{margin:0,fontSize:16,fontWeight:700,color:S.accent}}>🌸 Budget Tracker 2026</h1>
       <div style={{display:"flex",gap:8,alignItems:"center"}}>
         {saved&&<span style={{fontSize:12,color:S.green,fontWeight:600}}>✓ Saved</span>}
         <select value={month} onChange={e=>setMonth(Number(e.target.value))} style={{...sel,width:"auto",padding:"6px 10px"}}>
