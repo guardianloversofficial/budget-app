@@ -144,7 +144,7 @@ export default function App(){
   return saved ? JSON.parse(saved) : DEFAULT;
 });
   const [month,setMonth]=useState(CUR);
-  const [loading,setLoading]=useState(true);
+  const [loading,setLoading]=useState(false);
   const [saved,setSaved]=useState(false);
   useEffect(() => {
   if (data) {
